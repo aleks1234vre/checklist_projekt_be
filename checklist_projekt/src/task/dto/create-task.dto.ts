@@ -1,5 +1,5 @@
 import {Column} from "typeorm";
-import {IsNotEmpty} from "class-validator";
+import {IsNotEmpty, IsOptional} from "class-validator";
 
 
 export class CreateTaskDto {
@@ -9,16 +9,16 @@ export class CreateTaskDto {
     @IsNotEmpty()
     description_task: string;
 
-    @IsNotEmpty()
-    status: boolean;
+    @IsOptional()
+    status?: boolean;
 
-    @IsNotEmpty()
-    finished_at: Date;
+    @IsOptional()
+    finished_at?: Date;
 
-    @IsNotEmpty()
-    category_id: number;
+    @IsOptional()
+    category_id?: number;
 
-    @IsNotEmpty()
-    user_id: number;
+    @IsOptional()
+    user_id?: number;
 
 }

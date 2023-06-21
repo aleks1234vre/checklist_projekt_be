@@ -1,9 +1,10 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch, Post, UseGuards} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {User} from "../entities/user.entity";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {DeleteResult} from "typeorm";
 import {UpdateUserDto} from "./dto/update-user.dto";
+import {JwtAuthGuard} from "../auth/guards/jwtAuth.guard";
 
 @Controller('users')
 export class UserController {

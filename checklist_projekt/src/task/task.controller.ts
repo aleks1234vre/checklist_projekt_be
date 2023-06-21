@@ -15,14 +15,16 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 import {Task} from "../entities/task.entity";
+import {JwtAuthGuard} from "../auth/guards/jwtAuth.guard";
 
 @Controller('tasks')
 export class TaskController {
-    constructor(private readonly taskService: TaskService) {}
-
+    constructor(private readonly taskService: TaskService) {
+    }
+    @UseGuards(JwtAuthGuard)
     @Post()
-    create(@Request() req,@Body() createTaskDto: CreateTaskDto) {
-        return this.taskService.create(req.user.id,createTaskDto);
+    create(@Request() req, @Body() createTaskDto: CreateTaskDto) {
+        return this.taskService.create(req.user.id, createTaskDto);
     }
 
     @Get()
@@ -37,15 +39,18 @@ export class TaskController {
 
 
     @Patch(':id')
-    async update(@Request() req, @Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    async update(
+        @Request() req,
+        @Param('id') id: string,
+        @Body() updateTaskDto: UpdateTaskDto
+    ) {
         const currentUser = req.user.id;
-        const task: Task = await this.findOne(id);
+        const task: Task = await this.taskService.findOne(+id);
         if (currentUser != task.user.id) {
             throw new BadRequestException("It is not your task");
         }
         return this.taskService.update(+id, updateTaskDto);
     }
-
 
     @Delete(':id')
     async remove(@Request() req, @Param('id') id: string) {
@@ -57,3 +62,4 @@ export class TaskController {
         return this.taskService.remove(+id);
     }
 }
+

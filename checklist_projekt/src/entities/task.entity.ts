@@ -24,13 +24,13 @@ export class Task {
     @Column({nullable: true})
     status:boolean;
 
-    @CreateDateColumn()
+    @CreateDateColumn({nullable:true})
     created_at: Date;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({nullable:true})
     updated_at: Date;
 
-    @Column()
+    @Column({nullable:true})
     finished_at: Date;
 
     @ManyToOne(() => User, user => user.tasks)
