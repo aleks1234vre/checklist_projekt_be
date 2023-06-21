@@ -39,13 +39,14 @@ export class UserService {
         return this.userRepository.delete(id);
     }
 
-    async findById(id:number): Promise<User> {
+    async findById(id: number): Promise<User> {
         return this.userRepository.findOneBy({id});
     }
 
     async findByEmail(email:string): Promise<User> {
         return this.userRepository.findOneBy({email});
     }
+
 
     async update(id:number, updateUserDto:UpdateUserDto): Promise<User> {
         try {
