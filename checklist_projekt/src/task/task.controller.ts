@@ -8,12 +8,11 @@ import {
     Delete,
     UseGuards,
     Request,
-    BadRequestException
+    BadRequestException, Req
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-
 import {Task} from "../entities/task.entity";
 import {JwtAuthGuard} from "../auth/guards/jwtAuth.guard";
 
@@ -26,11 +25,13 @@ export class TaskController {
     create(@Request() req, @Body() createTaskDto: CreateTaskDto) {
         return this.taskService.create(req.user.id, createTaskDto);
     }
-
     @Get()
-    findAll() {
-        return this.taskService.findAll();
+    @UseGuards(JwtAuthGuard)
+    findAll(@Request() request): Promise<Task[]> {
+        const user_id = request.user.id;
+        return this.taskService.findAllByUser(user_id);
     }
+
 
     @Get(':id')
     findOne(@Param('id') id: string) {

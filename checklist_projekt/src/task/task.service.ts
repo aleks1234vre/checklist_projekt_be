@@ -22,6 +22,9 @@ export class TaskService {
         return await this.taskRepository.save(task);
     }
 
+    async findAllByUser(userId: number): Promise<Task[]> {
+        return this.taskRepository.find({ where: { user: { id: userId } } });
+    }
     async findAll(): Promise<Task[]> {
         return await this.taskRepository.find();
     }

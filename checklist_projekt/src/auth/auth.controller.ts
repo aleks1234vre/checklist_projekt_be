@@ -27,7 +27,7 @@ export class AuthController {
     @Get('profile')
     async getProfile(@Request() req): Promise<User> {
         const userId = req.user.id;
-        return this.userService.findById(userId); // Access userService here
+        return this.userService.findById(userId);
     }
 
     @Post('logout')

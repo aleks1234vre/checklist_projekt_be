@@ -18,7 +18,7 @@ export class Task {
     @Column()
     title_task:string;
 
-    @Column()
+    @Column({nullable:true})
     description_task:string;
 
     @Column({nullable: true})

@@ -5,7 +5,7 @@ import { IsOptional } from "class-validator";
 export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
 
     @IsOptional()
-    title?:string;
+    category_name?:string;
 
     @IsOptional()
     description?:string;

@@ -6,8 +6,8 @@ export class CreateTaskDto {
     @IsNotEmpty()
     title_task: string;
 
-    @IsNotEmpty()
-    description_task: string;
+    @IsOptional()
+    description_task?: string;
 
     @IsOptional()
     status?: boolean;
