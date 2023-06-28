@@ -7,10 +7,10 @@ export class UpdateUserDto {
     @IsOptional()
     last_name?: string;
 
-    @Column()
+    @IsOptional()
     address?: string;
 
-    @Column()
+    @IsOptional()
     phone_number?: number;
 
 }

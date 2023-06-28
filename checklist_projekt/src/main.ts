@@ -11,7 +11,7 @@ async function bootstrap() {
   const corsOptions: CorsOptions = {
     origin: 'http://localhost:5173',
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
-    methods: 'GET, POST, PUT, DELETE',
+    methods: 'GET, POST, PUT, DELETE, PATCH',
     credentials: true, // Allow cookies to be sent with the request
   };
   app.enableCors(corsOptions);

@@ -24,6 +24,9 @@ export class Task {
     @Column({nullable: true})
     status:boolean;
 
+    @Column ({nullable:true})
+    taskNumber: number;
+
     @CreateDateColumn({nullable:true})
     created_at: Date;
 

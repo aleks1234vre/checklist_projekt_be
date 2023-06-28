@@ -3,9 +3,7 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { LocalAuthGuard } from './guards/localAuth.guard';
 import { JwtAuthGuard } from './guards/jwtAuth.guard';
-import { UserRole } from './roles/roles';
-import { Roles } from './roles/roles.decorator';
-import { CaslGuard } from './guards/CASL.guard';
+
 import { User } from '../entities/user.entity';
 import { UserService } from '../user/user.service'; // Import UserService
 

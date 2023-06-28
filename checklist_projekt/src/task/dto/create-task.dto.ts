@@ -16,7 +16,11 @@ export class CreateTaskDto {
     finished_at?: Date;
 
     @IsOptional()
+    taskNumber?:number;
+
+    @IsOptional()
     category_id?: number;
+
 
     @IsOptional()
     user_id?: number;

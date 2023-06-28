@@ -17,6 +17,9 @@ export class UpdateTaskDto extends PartialType (CreateTaskDto) {
     finished_at?: Date;
 
     @IsOptional()
+    taskNumber?:number;
+
+    @IsOptional()
     category_id?: number;
 
     @IsOptional()

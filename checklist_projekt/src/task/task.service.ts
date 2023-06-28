@@ -48,7 +48,7 @@ export class TaskService {
 
     async update(id: number, updateTaskDto: UpdateTaskDto): Promise<Task> {
         await this.taskRepository.update(id, updateTaskDto);
-        return this.findOne(id);
+        return this.findOne(+id);
     }
 
     remove(id: number): Promise<DeleteResult> {
