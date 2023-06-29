@@ -1,4 +1,4 @@
-import {IsOptional} from 'class-validator';
+import {IsOptional, MinLength} from 'class-validator';
 import {Column} from "typeorm";
 export class UpdateUserDto {
     @IsOptional()
@@ -12,5 +12,9 @@ export class UpdateUserDto {
 
     @IsOptional()
     phone_number?: number;
+
+    @IsOptional()
+    @MinLength(8)
+    password?: string;
 
 }

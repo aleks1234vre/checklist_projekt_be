@@ -10,6 +10,9 @@ export class AuthService {
         private jwtService: JwtService) {
     }
 
+    async comparePasswords(plainPassword: string, hashedPassword: string): Promise<boolean> {
+        return bcrypt.compare(plainPassword, hashedPassword);
+    }
     async signIn(email: string, password: string) {
         const user = await this.userService.findByEmail(email);
         if(!user) {
