@@ -18,7 +18,7 @@ export class Category {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @OneToMany(() => Task, task => task.category)
+    @OneToMany(() => Task, task => task.category, { cascade: true })
     tasks: Task[];
 
 }

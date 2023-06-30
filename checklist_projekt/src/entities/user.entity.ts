@@ -30,7 +30,7 @@ export class User {
     @CreateDateColumn()
     created_at: Date;
 
-    @OneToMany(() => Task, task => task.user)
+    @OneToMany(() => Task, task => task.user, { cascade: true })
     tasks: Task[];
 }
 

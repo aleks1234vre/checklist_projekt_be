@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Request, Get, Res, HttpStatus, Body, Patch } from '@nestjs/common';
+import {Controller, Post, UseGuards, Request, Get, Res, HttpStatus, Body, Patch, Delete} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { LocalAuthGuard } from './guards/localAuth.guard';
@@ -64,5 +64,17 @@ export class AuthController {
     logout(@Request() req) {
         req.res.setHeader('Set-Cookie', `Access_token=; HttpOnly; Path=/; Max-Age=0`);
         req.res.status(HttpStatus.OK).json({ message: 'Logout successful' });
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete('deleteaccount')
+    async deleteAccount(@Request() req, @Res() res: Response) {
+        try {
+            const userId = req.user.id;
+            await this.userService.delete(userId);
+            res.status(HttpStatus.OK).json({ message: 'Account deleted successfully' });
+        } catch (error) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Error deleting account!!!!' });
+        }
     }
 }

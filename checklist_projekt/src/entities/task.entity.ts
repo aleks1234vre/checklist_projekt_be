@@ -36,7 +36,7 @@ export class Task {
     @Column({nullable:true})
     finished_at: Date;
 
-    @ManyToOne(() => User, user => user.tasks)
+    @ManyToOne(() => User, user => user.tasks) // Remove cascade remove
     @JoinColumn({ name: 'user_id' })
     user: User;
 
