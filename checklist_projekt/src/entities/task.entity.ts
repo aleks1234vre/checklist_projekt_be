@@ -36,12 +36,12 @@ export class Task {
     @Column({nullable:true})
     finished_at: Date;
 
-    @ManyToOne(() => User, user => user.tasks) // Remove cascade remove
+    @ManyToOne(() => User, user => user.tasks,{ onDelete: 'CASCADE'})
     @JoinColumn({ name: 'user_id' })
     user: User;
 
 
-    @ManyToOne(() => Category, category => category.tasks)
+    @ManyToOne(() => Category, category => category.tasks, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'category_id' })
     category: Category
 }

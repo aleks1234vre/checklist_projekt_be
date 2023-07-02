@@ -31,6 +31,7 @@ export class TaskController {
     findAll(@Request() request): Promise<Task[]> {
         const user_id = request.user.id;
         return this.taskService.findAllByUser(user_id);
+
     }
 
 
@@ -58,7 +59,7 @@ export class TaskController {
 
         return this.taskService.update(+id, updateTaskDto);
     }
-
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     async remove(@Request() req, @Param('id') id: string) {
         const currentUser = req.user.id;

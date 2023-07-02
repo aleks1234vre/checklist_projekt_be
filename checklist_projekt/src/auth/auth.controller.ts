@@ -40,7 +40,7 @@ export class AuthController {
             user.password = hashedPassword;
             await this.userService.update(userId, user);
 
-            res.status(HttpStatus.OK).json({ message: 'Password changed successfully' });
+            res.status(HttpStatus.OK).json({ message: 'Password change successful' });
         } else {
             res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Invalid current password' });
         }
@@ -72,7 +72,8 @@ export class AuthController {
         try {
             const userId = req.user.id;
             await this.userService.delete(userId);
-            res.status(HttpStatus.OK).json({ message: 'Account deleted successfully' });
+            req.res.setHeader('Set-Cookie', `Access_token=; HttpOnly; Path=/; Max-Age=0`);
+            req.res.status(HttpStatus.OK).json({ message: 'Account deletion successful' });
         } catch (error) {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Error deleting account!!!!' });
         }

@@ -21,7 +21,6 @@ export class CreateTaskDto {
     @IsOptional()
     category_id?: number;
 
-
     @IsOptional()
     user_id?: number;
 

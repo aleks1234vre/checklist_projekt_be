@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import {InjectRepository} from "@nestjs/typeorm";
@@ -13,17 +13,22 @@ export class TaskService {
     }
 
     async create(user_id: number, createTaskDto: CreateTaskDto) {
-        const data =
-            { ...createTaskDto,
-                user: {id: user_id},
-                category: {id: createTaskDto.category_id}
-            };
-        const task = this.taskRepository.create(data);
+        const { category_id, ...taskData } = createTaskDto;
+
+
+
+        const task = this.taskRepository.create({
+            ...taskData,
+            user: { id: user_id },
+            category: { id: category_id },
+        });
+
         return await this.taskRepository.save(task);
     }
 
     async findAllByUser(userId: number): Promise<Task[]> {
-        return this.taskRepository.find({ where: { user: { id: userId } } });
+        return this.taskRepository.find({ where: { user: { id: userId } } , relations: ["category"]});
+
     }
     async findAll(): Promise<Task[]> {
         return await this.taskRepository.find();
@@ -47,8 +52,19 @@ export class TaskService {
     }
 
     async update(id: number, updateTaskDto: UpdateTaskDto): Promise<Task> {
-        await this.taskRepository.update(id, updateTaskDto);
-        return this.findOne(+id);
+        const { category_id, ...rest } = updateTaskDto;
+
+        await this.taskRepository.update(id, rest);
+
+        // Assign the category separately if it exists in the updateTaskDto
+        if (category_id) {
+            await this.taskRepository.createQueryBuilder()
+                .relation(Task, "category")
+                .of(id)
+                .set(category_id);
+        }
+
+        return this.findOne(id);
     }
 
     remove(id: number): Promise<DeleteResult> {
