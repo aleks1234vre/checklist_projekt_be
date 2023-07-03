@@ -16,27 +16,26 @@ class ChangePasswordDto {
 export class AuthController {
     constructor(
         private readonly authService: AuthService,
-        private readonly userService: UserService, // Inject UserService
+        private readonly userService: UserService, 
     ) {}
 
     @UseGuards(JwtAuthGuard)
     @Patch('changepassword')
     async changePassword(
         @Request() req,
-        @Body() changePasswordDto: ChangePasswordDto, // Use the validation DTO
+        @Body() changePasswordDto: ChangePasswordDto,
         @Res() res: Response,
     ) {
         const userId = req.user.id;
         const user = await this.userService.findById(userId);
 
-        // Compare the current password with the stored password
+      
         const isMatch = await bcrypt.compare(req.body.currentPassword, user.password);
 
         if (isMatch) {
-            // Hash the new password
+          
             const hashedPassword = await bcrypt.hash(changePasswordDto.newPassword, 10);
 
-            // Update the user's password
             user.password = hashedPassword;
             await this.userService.update(userId, user);
 
