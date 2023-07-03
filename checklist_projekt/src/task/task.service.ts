@@ -56,7 +56,7 @@ export class TaskService {
 
         await this.taskRepository.update(id, rest);
 
-        // Assign the category separately if it exists in the updateTaskDto
+     
         if (category_id) {
             await this.taskRepository.createQueryBuilder()
                 .relation(Task, "category")
